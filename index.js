@@ -8,28 +8,27 @@ function prefix() {
 	var editor = atom.workspace.getActiveEditor();
 	var isCSS = editor.getGrammar().name === 'CSS';
 	var text = '';
-	var textPrefixed = '';
+	var prefixed = '';
 
 	if (!editor) {
 		return;
 	}
 
-	// if Atom reports that the content is CSS, use Autoprefixer for all
-	// content, otherwise, just use Autoprefixer for the selected content.
+	// process the selected text only when not CSS
 	text = isCSS ? editor.getText() : editor.getSelectedText();
 
 	try {
-		textPrefixed = autoprefixer.apply(autoprefixer, browsers).process(text).css;
-	} catch (e) {
+		prefixed = autoprefixer.apply(autoprefixer, browsers).process(text).css;
+	} catch (err) {
+		console.error(err);
 		atom.beep();
 		return;
 	}
 
 	if (isCSS) {
-		editor.setText(textPrefixed);
+		editor.setText(prefixed);
 	} else {
-		// replace selected content with the result from Autoprefixer
-		editor.setTextInBufferRange(editor.getSelectedBufferRange(), textPrefixed);
+		editor.setTextInBufferRange(editor.getSelectedBufferRange(), prefixed);
 	}
 }
 
