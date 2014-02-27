@@ -1,3 +1,7 @@
+/* global atom */
+
+'use strict';
+
 var autoprefixer = require('autoprefixer');
 var plugin = module.exports;
 
@@ -10,15 +14,36 @@ plugin.activate = function () {
 };
 
 plugin.prefix = function () {
+
+	var browsers = atom.config.get('autoprefixer.browsers');
 	var editor = atom.workspace.getActiveEditor();
+	var isCSS = editor.getGrammar().name === 'CSS';
+	var text = '';
+	var textPrefixed = '';
+
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	if (!editor) {
 		return;
 	}
 
-	var browsers = atom.config.get('autoprefixer.browsers');
-	var text = editor.getText();
-	var prefixed = autoprefixer.apply(autoprefixer, browsers).process(text).css;
+	// If Atom reports that the content is CSS, use Autoprefixer for all
+	// content, otherwise, just use Autoprefixer for the selected content.
 
-	return editor.setText(prefixed);
+	text = isCSS ? editor.getText() : editor.getSelectedText();
+
+	try {
+		textPrefixed = autoprefixer.apply(autoprefixer, browsers).process(text).css;
+	} catch (e) {
+		atom.beep();
+		return;
+	}
+
+	if (isCSS) {
+		editor.setText(textPrefixed);
+	} else {
+		// replace selected content with the result from Autoprefixer
+		editor.setTextInBufferRange(editor.getSelectedBufferRange(), textPrefixed);
+	}
+
 };
