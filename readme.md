@@ -1,4 +1,6 @@
-# [atom](https://atom.io)-autoprefixer
+# Autoprefixer
+
+[Atom package](https://atom.io/packages/autoprefixer)
 
 > Prefix CSS with [Autoprefixer](https://github.com/ai/autoprefixer)
 
