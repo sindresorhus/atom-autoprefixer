@@ -3,7 +3,7 @@
 var autoprefixer = require('autoprefixer');
 var plugin = module.exports;
 
-function prefix () {
+function prefix() {
 	var browsers = atom.config.get('autoprefixer.browsers');
 	var editor = atom.workspace.getActiveEditor();
 	var isCSS = editor.getGrammar().name === 'CSS';
@@ -14,7 +14,7 @@ function prefix () {
 		return;
 	}
 
-	// If Atom reports that the content is CSS, use Autoprefixer for all
+	// if Atom reports that the content is CSS, use Autoprefixer for all
 	// content, otherwise, just use Autoprefixer for the selected content.
 	text = isCSS ? editor.getText() : editor.getSelectedText();
 
