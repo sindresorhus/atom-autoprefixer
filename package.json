@@ -1,0 +1,23 @@
+{
+  "name": "autoprefixer",
+  "version": "0.0.0",
+  "description": "Prefix CSS with Autoprefixer",
+  "main": "autoprefixer.js",
+  "license": "MIT",
+  "repository": "https://github.com/sindresorhus/atom-autoprefixer",
+  "private": true,
+  "activationEvents": [
+    "autoprefixer"
+  ],
+  "author": {
+    "name": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "http://sindresorhus.com"
+  },
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "dependencies": {
+    "autoprefixer": "^1.1.0"
+  }
+}
