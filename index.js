@@ -1,4 +1,3 @@
-/* global atom */
 'use strict';
 var autoprefixer = require('autoprefixer');
 var plugin = module.exports;
@@ -7,29 +6,32 @@ function prefix() {
 	var browsers = atom.config.get('autoprefixer.browsers');
 	var editor = atom.workspace.getActiveEditor();
 	var isCSS = editor.getGrammar().name === 'CSS';
-	var text = '';
-	var prefixed = '';
 
 	if (!editor) {
 		return;
 	}
 
 	// process the selected text only when not CSS
-	text = isCSS ? editor.getText() : editor.getSelectedText();
+	var text = isCSS ? editor.getText() : editor.getSelectedText();
+	var prefixed = '';
 
 	try {
-		prefixed = autoprefixer.apply(autoprefixer, browsers).process(text).css;
+		prefixed = autoprefixer(browsers).process(text).css;
 	} catch (err) {
 		console.error(err);
 		atom.beep();
 		return;
 	}
 
+	var cursorPosition = editor.getCursorBufferPosition();
+
 	if (isCSS) {
 		editor.setText(prefixed);
 	} else {
 		editor.setTextInBufferRange(editor.getSelectedBufferRange(), prefixed);
 	}
+
+	editor.setCursorBufferPosition(cursorPosition);
 }
 
 plugin.configDefaults = {
