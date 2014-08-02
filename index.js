@@ -17,7 +17,8 @@ function prefix() {
 
 	try {
 		prefixed = autoprefixer(browsers).process(text, {
-			safe: true
+			safe: true,
+			cascade: atom.config.get('autoprefixer.cascade')
 		}).css;
 	} catch (err) {
 		console.error(err);
@@ -37,7 +38,8 @@ function prefix() {
 }
 
 plugin.configDefaults = {
-	browsers: ['> 1%', 'last 2 versions', 'Firefox ESR', 'Opera 12.1']
+	browsers: ['> 1%', 'last 2 versions', 'Firefox ESR', 'Opera 12.1'],
+	cascade: true
 };
 
 plugin.activate = function () {
