@@ -3,7 +3,7 @@
   "version": "0.2.1",
   "description": "Prefix CSS with Autoprefixer",
   "license": "MIT",
-  "repository": "https://github.com/sindresorhus/atom-autoprefixer",
+  "repository": "sindresorhus/atom-autoprefixer",
   "private": true,
   "activationEvents": [
     "autoprefixer"
@@ -14,7 +14,7 @@
     "url": "http://sindresorhus.com"
   },
   "engines": {
-    "atom": ">0.50.0"
+    "atom": ">=0.60.0"
   },
   "dependencies": {
     "autoprefixer": "^1.1.0"
