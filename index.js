@@ -16,7 +16,9 @@ function prefix() {
 	var prefixed = '';
 
 	try {
-		prefixed = autoprefixer(browsers).process(text).css;
+		prefixed = autoprefixer(browsers).process(text, {
+			safe: true
+		}).css;
 	} catch (err) {
 		console.error(err);
 		atom.beep();
