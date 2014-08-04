@@ -16,9 +16,10 @@ function prefix() {
 	var prefixed = '';
 
 	try {
-		prefixed = autoprefixer(browsers).process(text, {
-			safe: true,
+		prefixed = autoprefixer(browsers, {
 			cascade: atom.config.get('autoprefixer.cascade')
+		}).process(text, {
+			safe: true
 		}).css;
 	} catch (err) {
 		console.error(err);
