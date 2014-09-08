@@ -1,9 +1,8 @@
 'use strict';
-var autoprefixer = require('autoprefixer');
+var autoprefixer = require('autoprefixer-core');
 var plugin = module.exports;
 
 function prefix() {
-	var browsers = atom.config.get('autoprefixer.browsers');
 	var editor = atom.workspace.getActiveEditor();
 	var isCSS = editor.getGrammar().name === 'CSS';
 
@@ -16,7 +15,8 @@ function prefix() {
 	var prefixed = '';
 
 	try {
-		prefixed = autoprefixer(browsers, {
+		prefixed = autoprefixer({
+			browsers: atom.config.get('autoprefixer.browsers'),
 			cascade: atom.config.get('autoprefixer.cascade')
 		}).process(text, {
 			safe: true
@@ -39,7 +39,7 @@ function prefix() {
 }
 
 plugin.configDefaults = {
-	browsers: ['> 1%', 'last 2 versions', 'Firefox ESR', 'Opera 12.1'],
+	browsers: autoprefixer.default,
 	cascade: true
 };
 

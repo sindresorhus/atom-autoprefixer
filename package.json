@@ -17,6 +17,6 @@
     "atom": ">=0.60.0"
   },
   "dependencies": {
-    "autoprefixer": "^2.2.0"
+    "autoprefixer-core": "^3.0.1"
   }
 }
