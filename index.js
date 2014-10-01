@@ -2,14 +2,14 @@
 var autoprefixer = require('autoprefixer-core');
 var plugin = module.exports;
 
-function prefix() {
+function init() {
 	var editor = atom.workspace.getActiveEditor();
-	var isCSS = editor.getGrammar().name === 'CSS';
 
 	if (!editor) {
 		return;
 	}
 
+	var isCSS = editor.getGrammar().scopeName === 'source.css';
 	// process the selected text only when not CSS
 	var text = isCSS ? editor.getText() : editor.getSelectedText();
 	var prefixed = '';
@@ -44,5 +44,5 @@ plugin.configDefaults = {
 };
 
 plugin.activate = function () {
-	return atom.workspaceView.command('autoprefixer', prefix);
+	return atom.workspaceView.command('autoprefixer', init);
 };
