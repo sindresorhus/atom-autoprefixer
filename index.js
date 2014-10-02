@@ -1,6 +1,5 @@
 'use strict';
 var autoprefixer = require('autoprefixer-core');
-var plugin = module.exports;
 
 function init() {
 	var editor = atom.workspace.getActiveEditor();
@@ -38,11 +37,20 @@ function init() {
 	editor.setCursorBufferPosition(cursorPosition);
 }
 
-plugin.configDefaults = {
-	browsers: autoprefixer.default,
-	cascade: true
+exports.config = {
+	browsers: {
+		type: 'array',
+		default: autoprefixer.default,
+		items: {
+			type: 'string'
+		}
+	},
+	cascade: {
+		type: 'boolean',
+		default: true
+	}
 };
 
-plugin.activate = function () {
+exports.activate = function () {
 	atom.workspaceView.command('autoprefixer', init);
 };
