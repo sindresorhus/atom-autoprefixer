@@ -44,5 +44,5 @@ plugin.configDefaults = {
 };
 
 plugin.activate = function () {
-	return atom.workspaceView.command('autoprefixer', init);
+	atom.workspaceView.command('autoprefixer', init);
 };
