@@ -47,7 +47,13 @@ exports.config = {
 	},
 	cascade: {
 		type: 'boolean',
-		default: true
+		default: true,
+		title: 'Cascade prefixes'
+	},
+	remove: {
+		type: 'boolean',
+		default: true,
+		title: 'Remove unneeded prefixes'
 	}
 };
 
