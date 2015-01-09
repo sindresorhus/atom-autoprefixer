@@ -8,13 +8,12 @@ function init() {
 		return;
 	}
 
-	var isCSS = editor.getGrammar().scopeName === 'source.css';
-	// process the selected text only when not CSS
-	var text = isCSS ? editor.getText() : editor.getSelectedText();
-	var prefixed = '';
+	var selectedText = editor.getSelectedText();
+	var text = selectedText || editor.getText();
+	var retText = '';
 
 	try {
-		prefixed = autoprefixer({
+		retText = autoprefixer({
 			browsers: atom.config.get('autoprefixer.browsers'),
 			cascade: atom.config.get('autoprefixer.cascade')
 		}).process(text, {
@@ -28,10 +27,10 @@ function init() {
 
 	var cursorPosition = editor.getCursorBufferPosition();
 
-	if (isCSS) {
-		editor.setText(prefixed);
+	if (selectedText) {
+		editor.setTextInBufferRange(editor.getSelectedBufferRange(), retText);
 	} else {
-		editor.setTextInBufferRange(editor.getSelectedBufferRange(), prefixed);
+		editor.setText(retText);
 	}
 
 	editor.setCursorBufferPosition(cursorPosition);
