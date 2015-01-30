@@ -39,10 +39,7 @@ function init() {
 exports.config = {
 	browsers: {
 		type: 'array',
-		// manually add becuase of
-		// https://github.com/postcss/autoprefixer-core/issues/26
-		//default: autoprefixer.default,
-		default: ['> 1%', 'last 2 versions', 'Firefox ESR', 'Opera 12.1'],
+		default: autoprefixer.defaults,
 		items: {
 			type: 'string'
 		}

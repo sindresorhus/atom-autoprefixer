@@ -11,12 +11,12 @@
   "author": {
     "name": "Sindre Sorhus",
     "email": "sindresorhus@gmail.com",
-    "url": "http://sindresorhus.com"
+    "url": "sindresorhus.com"
   },
   "engines": {
     "atom": ">=0.174.0"
   },
   "dependencies": {
-    "autoprefixer-core": "^5.0.0"
+    "autoprefixer-core": "^5.1.0"
   }
 }

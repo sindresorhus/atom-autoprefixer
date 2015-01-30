@@ -7,7 +7,7 @@
 
 ## Install
 
-```sh
+```
 $ apm install autoprefixer
 ```
 
