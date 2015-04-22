@@ -16,6 +16,11 @@
   "engines": {
     "atom": ">=0.190.0"
   },
+  "keywords": [
+    "css",
+    "prefix",
+    "prefixer"
+  ],
   "dependencies": {
     "autoprefixer-core": "^5.1.0"
   }
