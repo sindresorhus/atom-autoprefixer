@@ -1,16 +1,16 @@
-'use strict';
-var autoprefixer = require('autoprefixer-core');
+'use babel';
+import autoprefixer from 'autoprefixer-core';
 
 function init() {
-	var editor = atom.workspace.getActiveTextEditor();
+	const editor = atom.workspace.getActiveTextEditor();
 
 	if (!editor) {
 		return;
 	}
 
-	var selectedText = editor.getSelectedText();
-	var text = selectedText || editor.getText();
-	var retText = '';
+	const selectedText = editor.getSelectedText();
+	const text = selectedText || editor.getText();
+	let retText = '';
 
 	try {
 		retText = autoprefixer({
@@ -36,7 +36,7 @@ function init() {
 	editor.setCursorBufferPosition(cursorPosition);
 }
 
-exports.config = {
+export let config = {
 	browsers: {
 		type: 'array',
 		default: autoprefixer.defaults,
@@ -56,6 +56,6 @@ exports.config = {
 	}
 };
 
-exports.activate = function () {
+export let activate = () => {
 	atom.commands.add('atom-text-editor', 'autoprefixer', init);
 };
