@@ -57,5 +57,5 @@ export let config = {
 };
 
 export let activate = () => {
-	atom.commands.add('atom-text-editor', 'autoprefixer', init);
+	atom.commands.add('atom-workspace', 'autoprefixer', init);
 };

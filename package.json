@@ -6,7 +6,7 @@
   "repository": "sindresorhus/atom-autoprefixer",
   "private": true,
   "activationCommands": {
-    "atom-text-editor": "autoprefixer"
+    "atom-workspace": "autoprefixer"
   },
   "author": {
     "name": "Sindre Sorhus",
@@ -22,6 +22,6 @@
     "prefixer"
   ],
   "dependencies": {
-    "autoprefixer-core": "^5.1.0"
+    "autoprefixer-core": "^5.2.0"
   }
 }
