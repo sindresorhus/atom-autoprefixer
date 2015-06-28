@@ -1,7 +1,5 @@
 # autoprefixer
 
-[Atom package](https://atom.io/packages/autoprefixer)
-
 > Prefix CSS with [Autoprefixer](https://github.com/ai/autoprefixer)
 
 
@@ -11,7 +9,7 @@
 $ apm install autoprefixer
 ```
 
-Or Settings → Packages → Search for `autoprefixer`
+Or Settings → Install → Search for `autoprefixer`
 
 
 ## Usage

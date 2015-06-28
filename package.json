@@ -14,7 +14,7 @@
     "url": "sindresorhus.com"
   },
   "engines": {
-    "atom": ">=0.190.0"
+    "atom": ">=1.0.0"
   },
   "keywords": [
     "css",
