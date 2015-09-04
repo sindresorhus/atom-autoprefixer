@@ -1,5 +1,7 @@
 'use babel';
-import autoprefixer from 'autoprefixer-core';
+import postcss from 'postcss';
+import autoprefixer from 'autoprefixer';
+import postcssSafeParser from 'postcss-safe-parser';
 
 function init() {
 	const editor = atom.workspace.getActiveTextEditor();
@@ -10,33 +12,38 @@ function init() {
 
 	const selectedText = editor.getSelectedText();
 	const text = selectedText || editor.getText();
-	let retText = '';
 
-	try {
-		retText = autoprefixer({
-			browsers: atom.config.get('autoprefixer.browsers'),
-			cascade: atom.config.get('autoprefixer.cascade')
-		}).process(text, {
-			safe: true
-		}).css;
-	} catch (err) {
+	postcss(autoprefixer({
+		browsers: atom.config.get('autoprefixer.browsers'),
+		cascade: atom.config.get('autoprefixer.cascade')
+	})).process(text, {
+		parser: postcssSafeParser
+	}).then(function (result) {
+		result.warnings().forEach(x => {
+			console.warn(x.toString());
+			atom.notifications.addWarning('Autoprefixer', {detail: x.toString()});
+		});
+
+		const cursorPosition = editor.getCursorBufferPosition();
+
+		if (selectedText) {
+			editor.setTextInBufferRange(editor.getSelectedBufferRange(), result.css);
+		} else {
+			editor.setText(result.css);
+		}
+
+		editor.setCursorBufferPosition(cursorPosition);
+	}).catch(function (err) {
+		if (err.name === 'CssSyntaxError') {
+			err.message += err.showSourceCode();
+		}
+
 		console.error(err);
-		atom.beep();
-		return;
-	}
-
-	var cursorPosition = editor.getCursorBufferPosition();
-
-	if (selectedText) {
-		editor.setTextInBufferRange(editor.getSelectedBufferRange(), retText);
-	} else {
-		editor.setText(retText);
-	}
-
-	editor.setCursorBufferPosition(cursorPosition);
+		atom.notifications.addError('Autoprefixer', {detail: err.message});
+	});
 }
 
-export let config = {
+export const config = {
 	browsers: {
 		type: 'array',
 		default: autoprefixer.defaults,
@@ -56,6 +63,6 @@ export let config = {
 	}
 };
 
-export let activate = () => {
+export const activate = () => {
 	atom.commands.add('atom-workspace', 'autoprefixer', init);
 };
