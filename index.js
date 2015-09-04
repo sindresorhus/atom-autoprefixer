@@ -18,7 +18,7 @@ function init() {
 		cascade: atom.config.get('autoprefixer.cascade')
 	})).process(text, {
 		parser: postcssSafeParser
-	}).then(function (result) {
+	}).then(result => {
 		result.warnings().forEach(x => {
 			console.warn(x.toString());
 			atom.notifications.addWarning('Autoprefixer', {detail: x.toString()});
@@ -33,7 +33,7 @@ function init() {
 		}
 
 		editor.setCursorBufferPosition(cursorPosition);
-	}).catch(function (err) {
+	}).catch(err => {
 		if (err.name === 'CssSyntaxError') {
 			err.message += err.showSourceCode();
 		}

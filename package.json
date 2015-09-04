@@ -16,6 +16,9 @@
   "engines": {
     "atom": ">=1.0.0"
   },
+  "scripts": {
+    "test": "xo"
+  },
   "keywords": [
     "css",
     "prefix",
@@ -25,5 +28,14 @@
     "autoprefixer": "^6.0.0",
     "postcss": "^5.0.4",
     "postcss-safe-parser": "^1.0.1"
+  },
+  "devDependencies": {
+    "xo": "*"
+  },
+  "xo": {
+    "esnext": true,
+    "globals": [
+      "atom"
+    ]
   }
 }
