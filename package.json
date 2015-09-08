@@ -5,13 +5,13 @@
   "license": "MIT",
   "repository": "sindresorhus/atom-autoprefixer",
   "private": true,
-  "activationCommands": {
-    "atom-workspace": "autoprefixer"
-  },
   "author": {
     "name": "Sindre Sorhus",
     "email": "sindresorhus@gmail.com",
     "url": "sindresorhus.com"
+  },
+  "activationCommands": {
+    "atom-workspace": "autoprefixer"
   },
   "engines": {
     "atom": ">=1.0.0"

@@ -1,4 +1,4 @@
-'use babel';
+/** @babel */
 import postcss from 'postcss';
 import autoprefixer from 'autoprefixer';
 import postcssSafeParser from 'postcss-safe-parser';
@@ -13,10 +13,7 @@ function init() {
 	const selectedText = editor.getSelectedText();
 	const text = selectedText || editor.getText();
 
-	postcss(autoprefixer({
-		browsers: atom.config.get('autoprefixer.browsers'),
-		cascade: atom.config.get('autoprefixer.cascade')
-	})).process(text, {
+	postcss(autoprefixer(atom.config.get('autoprefixer'))).process(text, {
 		parser: postcssSafeParser
 	}).then(result => {
 		result.warnings().forEach(x => {
@@ -45,6 +42,8 @@ function init() {
 
 export const config = {
 	browsers: {
+		title: 'Supported browsers',
+		description: 'Using the [following syntax](https://github.com/ai/browserslist#queries).',
 		type: 'array',
 		default: autoprefixer.defaults,
 		items: {
@@ -52,14 +51,14 @@ export const config = {
 		}
 	},
 	cascade: {
+		title: 'Cascade prefixes',
 		type: 'boolean',
-		default: true,
-		title: 'Cascade prefixes'
+		default: true
 	},
 	remove: {
+		title: 'Remove unneeded prefixes',
 		type: 'boolean',
-		default: true,
-		title: 'Remove unneeded prefixes'
+		default: true
 	}
 };
 
