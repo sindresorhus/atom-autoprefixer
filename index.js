@@ -1,7 +1,16 @@
+
 /** @babel */
 import postcss from 'postcss';
 import autoprefixer from 'autoprefixer';
+import postcssSafeParser from 'postcss-safe-parser';
 import postcssScssParser from 'postcss-scss';
+
+function ext(path) {
+	if (!path) {
+		return undefined;
+	}
+	return path.substr(path.lastIndexOf('.') + 1).toLowerCase();
+}
 
 function init() {
 	const editor = atom.workspace.getActiveTextEditor();
@@ -12,9 +21,16 @@ function init() {
 
 	const selectedText = editor.getSelectedText();
 	const text = selectedText || editor.getText();
+	const path = editor.getPath();
+	let postcssParser = postcssScssParser;
+
+	if (path && ext(path) === 'css') {
+		console.info('Using safe css parser');
+		postcssParser = postcssSafeParser;
+	}
 
 	postcss(autoprefixer(atom.config.get('autoprefixer'))).process(text, {
-		parser: postcssScssParser
+		parser: postcssParser
 	}).then(result => {
 		result.warnings().forEach(x => {
 			console.warn(x.toString());
