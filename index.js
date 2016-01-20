@@ -1,7 +1,7 @@
 /** @babel */
 import postcss from 'postcss';
 import autoprefixer from 'autoprefixer';
-import postcssSafeParser from 'postcss-safe-parser';
+import postcssScssParser from 'postcss-scss';
 
 function init() {
 	const editor = atom.workspace.getActiveTextEditor();
@@ -14,11 +14,13 @@ function init() {
 	const text = selectedText || editor.getText();
 
 	postcss(autoprefixer(atom.config.get('autoprefixer'))).process(text, {
-		parser: postcssSafeParser
+		parser: postcssScssParser
 	}).then(result => {
 		result.warnings().forEach(x => {
 			console.warn(x.toString());
-			atom.notifications.addWarning('Autoprefixer', {detail: x.toString()});
+			atom.notifications.addWarning('Autoprefixer', {
+				detail: x.toString()
+			});
 		});
 
 		const cursorPosition = editor.getCursorBufferPosition();
@@ -36,7 +38,9 @@ function init() {
 		}
 
 		console.error(err);
-		atom.notifications.addError('Autoprefixer', {detail: err.message});
+		atom.notifications.addError('Autoprefixer', {
+			detail: err.message
+		});
 	});
 }
 
