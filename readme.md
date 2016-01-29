@@ -1,6 +1,6 @@
 # autoprefixer
 
-> Prefix CSS or SCSS with [Autoprefixer](https://github.com/ai/autoprefixer)
+> Prefix CSS and SCSS with [Autoprefixer](https://github.com/ai/autoprefixer)
 
 
 ## Install

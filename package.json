@@ -1,7 +1,7 @@
 {
   "name": "autoprefixer",
   "version": "3.1.0",
-  "description": "Prefix CSS",
+  "description": "Prefix CSS and SCSS",
   "license": "MIT",
   "repository": "sindresorhus/atom-autoprefixer",
   "private": true,
@@ -21,6 +21,7 @@
   },
   "keywords": [
     "css",
+    "scss",
     "prefix",
     "prefixer"
   ],
