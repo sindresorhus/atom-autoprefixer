@@ -23,6 +23,16 @@ Or, Settings → Install → Search for `autoprefixer`
 	![](https://f.cloud.github.com/assets/1223565/2284893/51e4bd18-9fce-11e3-8b1a-282f664593e9.gif)
 
 
+## Keyboard shortcut
+
+Set the keyboard shortcut you want in your [keymap](http://flight-manual.atom.io/using-atom/sections/basic-customization/#customizing-keybindings):
+
+```cson
+'atom-text-editor':
+	'cmd-shift-x': 'autoprefixer'
+```
+
+
 ## License
 
-MIT © [Sindre Sorhus](http://sindresorhus.com)
+MIT © [Sindre Sorhus](https://sindresorhus.com)
