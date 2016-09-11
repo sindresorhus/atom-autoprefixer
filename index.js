@@ -78,7 +78,7 @@ export const config = {
 };
 
 export const activate = () => {
-	if (atom.config.get('autoprefixer.onFileSave') == true) {
+	if (atom.config.get('autoprefixer.onFileSave') === true) {
 		atom.workspace.observeTextEditors(editor => {
 			editor.getBuffer().onDidSave(() => {
 				init(editor, true);
@@ -86,6 +86,6 @@ export const activate = () => {
 		});
 	}
 	atom.commands.add('atom-workspace', 'autoprefixer', () => {
-		init(atom.workspace.getActiveTextEditor())
+		init(atom.workspace.getActiveTextEditor());
 	});
 };
