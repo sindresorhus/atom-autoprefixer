@@ -10,9 +10,6 @@
     "email": "sindresorhus@gmail.com",
     "url": "sindresorhus.com"
   },
-  "activationCommands": {
-    "atom-workspace": "autoprefixer"
-  },
   "engines": {
     "atom": ">=1.0.0"
   },
