@@ -1,17 +1,23 @@
 /** @babel */
+import path from 'path';
 import postcss from 'postcss';
 import autoprefixer from 'autoprefixer';
 import postcssSafeParser from 'postcss-safe-parser';
 import postcssScss from 'postcss-scss';
 
-function init() {
-	const editor = atom.workspace.getActiveTextEditor();
+function init(editor, onSave) {
+	const supportedExt = [
+		'.css',
+		'.less',
+		'.scss',
+		'.sass'
+	];
 
-	if (!editor) {
+	if (!editor || !supportedExt.includes(path.extname(editor.getPath()))) {
 		return;
 	}
 
-	const selectedText = editor.getSelectedText();
+	const selectedText = onSave ? null : editor.getSelectedText();
 	const text = selectedText || editor.getText();
 	const parser = editor.getGrammar().scopeName === 'source.css' ? postcssSafeParser : postcssScss;
 
@@ -55,17 +61,31 @@ export const config = {
 		}
 	},
 	cascade: {
-		title: 'Cascade prefixes',
+		title: 'Cascade Prefixes',
 		type: 'boolean',
 		default: true
 	},
+	onFileSave: {
+		title: 'Run On File Save',
+		type: 'boolean',
+		default: false
+	},
 	remove: {
-		title: 'Remove unneeded prefixes',
+		title: 'Remove Unneeded Prefixes',
 		type: 'boolean',
 		default: true
 	}
 };
 
 export const activate = () => {
-	atom.commands.add('atom-workspace', 'autoprefixer', init);
+	if (atom.config.get('autoprefixer.onFileSave') === true) {
+		atom.workspace.observeTextEditors(editor => {
+			editor.getBuffer().onDidSave(() => {
+				init(editor, true);
+			});
+		});
+	}
+	atom.commands.add('atom-workspace', 'autoprefixer', () => {
+		init(atom.workspace.getActiveTextEditor());
+	});
 };
