@@ -28,8 +28,8 @@
   "dependencies": {
     "autoprefixer": "^6.3.1",
     "postcss": "^5.0.14",
-    "postcss-safe-parser": "^1.0.4",
-    "postcss-scss": "^0.1.3"
+    "postcss-safe-parser": "^2.0.0",
+    "postcss-scss": "^0.3.0"
   },
   "devDependencies": {
     "xo": "*"
