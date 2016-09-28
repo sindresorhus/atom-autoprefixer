@@ -4,15 +4,12 @@
   "description": "Prefix CSS and SCSS",
   "license": "MIT",
   "repository": "sindresorhus/atom-autoprefixer",
-  "private": true,
   "author": {
     "name": "Sindre Sorhus",
     "email": "sindresorhus@gmail.com",
     "url": "sindresorhus.com"
   },
-  "activationCommands": {
-    "atom-workspace": "autoprefixer"
-  },
+  "private": true,
   "engines": {
     "atom": ">=1.0.0"
   },
@@ -33,6 +30,9 @@
   },
   "devDependencies": {
     "xo": "*"
+  },
+  "activationCommands": {
+    "atom-workspace": "autoprefixer"
   },
   "xo": {
     "esnext": true,
