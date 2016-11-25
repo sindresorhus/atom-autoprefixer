@@ -71,7 +71,7 @@ export function deactivate() {
 	this.subscriptions.dispose();
 }
 
-export const activate = () => {
+export function activate() {
 	this.subscriptions = new CompositeDisposable();
 
 	this.subscriptions.add(atom.commands.add('atom-workspace', 'autoprefixer', () => {
@@ -81,4 +81,4 @@ export const activate = () => {
 			init(editor);
 		}
 	}));
-};
+}
