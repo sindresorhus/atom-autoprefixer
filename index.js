@@ -1,16 +1,11 @@
 /** @babel */
+import {CompositeDisposable} from 'atom';
 import postcss from 'postcss';
 import autoprefixer from 'autoprefixer';
 import postcssSafeParser from 'postcss-safe-parser';
 import postcssScss from 'postcss-scss';
 
-function init() {
-	const editor = atom.workspace.getActiveTextEditor();
-
-	if (!editor) {
-		return;
-	}
-
+function init(editor) {
 	const selectedText = editor.getSelectedText();
 	const text = selectedText || editor.getText();
 	const parser = editor.getGrammar().scopeName === 'source.css' ? postcssSafeParser : postcssScss;
@@ -24,14 +19,20 @@ function init() {
 		});
 
 		const cursorPosition = editor.getCursorBufferPosition();
+		const line = atom.views.getView(editor).getFirstVisibleScreenRow() +
+			editor.displayBuffer.getVerticalScrollMargin();
 
 		if (selectedText) {
 			editor.setTextInBufferRange(editor.getSelectedBufferRange(), result.css);
 		} else {
-			editor.setText(result.css);
+			editor.getBuffer().setTextViaDiff(result.css);
 		}
 
 		editor.setCursorBufferPosition(cursorPosition);
+
+		if (editor.getScreenLineCount() > line) {
+			editor.scrollToScreenPosition([line, 0]);
+		}
 	}).catch(err => {
 		if (err.name === 'CssSyntaxError') {
 			err.message += err.showSourceCode();
@@ -66,6 +67,18 @@ export const config = {
 	}
 };
 
+export function deactivate() {
+	this.subscriptions.dispose();
+}
+
 export const activate = () => {
-	atom.commands.add('atom-workspace', 'autoprefixer', init);
+	this.subscriptions = new CompositeDisposable();
+
+	this.subscriptions.add(atom.commands.add('atom-workspace', 'autoprefixer', () => {
+		const editor = atom.workspace.getActiveTextEditor();
+
+		if (editor) {
+			init(editor);
+		}
+	}));
 };
