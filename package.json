@@ -32,7 +32,10 @@
     "xo": "*"
   },
   "activationCommands": {
-    "atom-workspace": "autoprefixer"
+    "atom-workspace": [
+      "core:save",
+      "autoprefixer"
+    ]
   },
   "xo": {
     "esnext": true,
