@@ -25,7 +25,7 @@ function init(editor, onSave) {
 
 		const cursorPosition = editor.getCursorBufferPosition();
 		const line = atom.views.getView(editor).getFirstVisibleScreenRow() +
-			editor.displayBuffer.getVerticalScrollMargin();
+			editor.getVerticalScrollMargin();
 
 		if (selectedText) {
 			editor.setTextInBufferRange(editor.getSelectedBufferRange(), result.css);
