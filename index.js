@@ -13,9 +13,16 @@ const SUPPORTED_SCOPES = new Set([
 function init(editor, onSave) {
 	const selectedText = onSave ? null : editor.getSelectedText();
 	const text = selectedText || editor.getText();
-	const parser = editor.getGrammar().scopeName === 'source.css' ? postcssSafeParser : postcssScss;
 
-	postcss(autoprefixer(atom.config.get('autoprefixer'))).process(text, {parser}).then(result => {
+	const options = {
+		parser: postcssSafeParser
+	};
+
+	if (editor.getGrammar().scopeName !== 'source.css') {
+		options.syntax = postcssScss
+	}
+
+	postcss(autoprefixer(atom.config.get('autoprefixer'))).process(text, options).then(result => {
 		result.warnings().forEach(x => {
 			console.warn(x.toString());
 			atom.notifications.addWarning('Autoprefixer', {
