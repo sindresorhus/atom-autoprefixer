@@ -19,7 +19,7 @@ function init(editor, onSave) {
 	};
 
 	if (editor.getGrammar().scopeName !== 'source.css') {
-		options.syntax = postcssScss
+		options.syntax = postcssScss;
 	}
 
 	postcss(autoprefixer(atom.config.get('autoprefixer'))).process(text, options).then(result => {
