@@ -1,45 +1,45 @@
 {
-  "name": "autoprefixer",
-  "version": "3.7.1",
-  "description": "Prefix CSS and SCSS",
-  "license": "MIT",
-  "repository": "sindresorhus/atom-autoprefixer",
-  "author": {
-    "name": "Sindre Sorhus",
-    "email": "sindresorhus@gmail.com",
-    "url": "sindresorhus.com"
-  },
-  "private": true,
-  "engines": {
-    "atom": ">=1.13.0"
-  },
-  "scripts": {
-    "test": "xo"
-  },
-  "keywords": [
-    "css",
-    "scss",
-    "prefix",
-    "prefixer"
-  ],
-  "dependencies": {
-    "autoprefixer": "^7.0.0",
-    "postcss": "^6.0.1",
-    "postcss-safe-parser": "^3.0.0",
-    "postcss-scss": "^1.0.0"
-  },
-  "devDependencies": {
-    "xo": "*"
-  },
-  "activationCommands": {
-    "atom-workspace": [
-      "core:save",
-      "autoprefixer"
-    ]
-  },
-  "xo": {
-    "globals": [
-      "atom"
-    ]
-  }
+	"name": "autoprefixer",
+	"version": "3.7.1",
+	"description": "Prefix CSS and SCSS",
+	"license": "MIT",
+	"repository": "sindresorhus/atom-autoprefixer",
+	"author": {
+		"name": "Sindre Sorhus",
+		"email": "sindresorhus@gmail.com",
+		"url": "sindresorhus.com"
+	},
+	"private": true,
+	"engines": {
+		"atom": ">=1.36.0"
+	},
+	"scripts": {
+		"test": "xo"
+	},
+	"keywords": [
+		"css",
+		"scss",
+		"prefix",
+		"prefixer"
+	],
+	"dependencies": {
+		"autoprefixer": "^9.5.1",
+		"postcss": "^7.0.16",
+		"postcss-safe-parser": "^4.0.1",
+		"postcss-scss": "^2.0.0"
+	},
+	"devDependencies": {
+		"xo": "^0.24.0"
+	},
+	"activationCommands": {
+		"atom-workspace": [
+			"core:save",
+			"autoprefixer"
+		]
+	},
+	"xo": {
+		"globals": [
+			"atom"
+		]
+	}
 }

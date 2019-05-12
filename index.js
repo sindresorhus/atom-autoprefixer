@@ -10,7 +10,7 @@ const SUPPORTED_SCOPES = new Set([
 	'source.css.scss'
 ]);
 
-function init(editor, onSave) {
+async function init(editor, onSave) {
 	const selectedText = onSave ? null : editor.getSelectedText();
 	const text = selectedText || editor.getText();
 
@@ -22,7 +22,9 @@ function init(editor, onSave) {
 		options.syntax = postcssScss;
 	}
 
-	postcss(autoprefixer(atom.config.get('autoprefixer'))).process(text, options).then(result => {
+	try {
+		const result = await postcss(autoprefixer(atom.config.get('autoprefixer'))).process(text, options);
+
 		result.warnings().forEach(x => {
 			console.warn(x.toString());
 			atom.notifications.addWarning('Autoprefixer', {
@@ -45,14 +47,14 @@ function init(editor, onSave) {
 		if (editor.getScreenLineCount() > line) {
 			editor.scrollToScreenPosition([line, 0]);
 		}
-	}).catch(err => {
-		if (err.name === 'CssSyntaxError') {
-			err.message += err.showSourceCode();
+	} catch (error) {
+		if (error.name === 'CssSyntaxError') {
+			error.message += error.showSourceCode();
 		}
 
-		console.error(err);
-		atom.notifications.addError('Autoprefixer', {detail: err.message});
-	});
+		console.error(error);
+		atom.notifications.addError('Autoprefixer', {detail: error.message});
+	}
 }
 
 export const config = {
