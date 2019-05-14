@@ -92,11 +92,11 @@ export function activate() {
 	this.subscriptions = new CompositeDisposable();
 
 	this.subscriptions.add(atom.workspace.observeTextEditors(editor => {
-		editor.getBuffer().onWillSave(() => {
+		editor.getBuffer().onWillSave(async () => {
 			const isCSS = SUPPORTED_SCOPES.has(editor.getGrammar().scopeName);
 
 			if (isCSS && atom.config.get('autoprefixer.runOnSave')) {
-				init(editor, true);
+				await init(editor, true);
 			}
 		});
 	}));
