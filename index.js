@@ -14,12 +14,12 @@ async function init(editor, onSave) {
 	const selectedText = onSave ? null : editor.getSelectedText();
 	const text = selectedText || editor.getText();
 
-	const options = {
-		parser: postcssSafeParser
-	};
+	const options = {};
 
 	if (editor.getGrammar().scopeName !== 'source.css') {
 		options.syntax = postcssScss;
+	} else {
+		options.parser = postcssSafeParser
 	}
 
 	try {
