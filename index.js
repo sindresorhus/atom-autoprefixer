@@ -29,7 +29,7 @@ async function init(editor, onSave, type) {
 		if (type === 'prefix') {
 			result = await postcss(autoprefixer(atom.config.get('autoprefixer'))).process(text, options);
 		} else {
-			result = await postcss([ unprefix() ]).process(text, options);
+			result = await postcss([unprefix()]).process(text, options);
 		}
 
 		result.warnings().forEach(x => {
