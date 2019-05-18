@@ -1,3 +1,15 @@
-div {
-	display: flex;
+::-webkit-input-placeholder {
+	background: red;
+}
+::-moz-placeholder {
+	background: red;
+}
+:-ms-input-placeholder {
+	background: red;
+}
+::-ms-input-placeholder {
+	background: red;
+}
+::placeholder {
+	background: red;
 }
