@@ -16,10 +16,10 @@ async function init(editor, onSave) {
 
 	const options = {};
 
-	if (editor.getGrammar().scopeName !== 'source.css') {
-		options.syntax = postcssScss;
+	if (editor.getGrammar().scopeName === 'source.css') {
+		options.parser = postcssSafeParser;
 	} else {
-		options.parser = postcssSafeParser
+		options.syntax = postcssScss;
 	}
 
 	try {
