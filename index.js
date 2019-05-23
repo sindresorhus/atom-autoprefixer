@@ -14,7 +14,7 @@ const SUPPORTED_SCOPES = new Set([
 const HTML_SCOPE = 'text.html.basic';
 
 async function init(editor, onSave) {
-	const { scopeName } = editor.getGrammar();
+	const {scopeName} = editor.getGrammar();
 	const isHTML = scopeName === HTML_SCOPE;
 
 	const selectedText = onSave ? null : editor.getSelectedText();
