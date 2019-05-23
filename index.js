@@ -4,8 +4,7 @@ import postcss from 'postcss';
 import autoprefixer from 'autoprefixer';
 import postcssSafeParser from 'postcss-safe-parser';
 import postcssScss from 'postcss-scss';
-import htmlPostCss from 'html-postcss';
-
+import HTMLPostCSS from 'html-postcss';
 
 const SUPPORTED_SCOPES = new Set([
 	'source.css',
@@ -15,7 +14,7 @@ const SUPPORTED_SCOPES = new Set([
 const HTML_SCOPE = 'text.html.basic';
 
 async function init(editor, onSave) {
-	const scopeName = editor.getGrammar().scopeName;
+	const { scopeName } = editor.getGrammar();
 	const isHTML = scopeName === HTML_SCOPE;
 
 	const selectedText = onSave ? null : editor.getSelectedText();
@@ -31,9 +30,9 @@ async function init(editor, onSave) {
 
 	try {
 		let outCss;
-		// htmlPostCss requires complete html to process, selectedText doesn't work
+		// Package htmlPostCss requires complete html to process, selectedText doesn't work
 		if (isHTML && !selectedText) {
-			const processor = new htmlPostCss(autoprefixer(atom.config.get('autoprefixer')));
+			const processor = new HTMLPostCSS(autoprefixer(atom.config.get('autoprefixer')));
 			outCss = processor.process(text, {}, options);
 		} else {
 			const result = await postcss(autoprefixer(atom.config.get('autoprefixer'))).process(text, options);
@@ -43,7 +42,7 @@ async function init(editor, onSave) {
 					detail: x.toString()
 				});
 			});
-			outCss = result.css
+			outCss = result.css;
 		}
 
 		const cursorPosition = editor.getCursorBufferPosition();
