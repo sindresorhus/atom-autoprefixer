@@ -24,6 +24,7 @@
 	],
 	"dependencies": {
 		"autoprefixer": "^9.5.1",
+		"html-postcss": "^0.1.2",
 		"postcss": "^7.0.16",
 		"postcss-safe-parser": "^4.0.1",
 		"postcss-scss": "^2.0.0"

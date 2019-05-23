@@ -1,3 +1,7 @@
 div {
-	display: flex;
+	filter: grayscale(50%);
+}
+
+div {
+	transform: rotate(180deg);
 }

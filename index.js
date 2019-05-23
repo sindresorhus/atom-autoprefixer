@@ -4,42 +4,56 @@ import postcss from 'postcss';
 import autoprefixer from 'autoprefixer';
 import postcssSafeParser from 'postcss-safe-parser';
 import postcssScss from 'postcss-scss';
+import htmlPostCss from 'html-postcss';
+
 
 const SUPPORTED_SCOPES = new Set([
 	'source.css',
 	'source.css.scss'
 ]);
 
+const HTML_SCOPE = 'text.html.basic';
+
 async function init(editor, onSave) {
+	const scopeName = editor.getGrammar().scopeName;
+	const isHTML = scopeName === HTML_SCOPE;
+
 	const selectedText = onSave ? null : editor.getSelectedText();
 	const text = selectedText || editor.getText();
 
 	const options = {};
 
-	if (editor.getGrammar().scopeName === 'source.css') {
+	if (scopeName === 'source.css' || isHTML) {
 		options.parser = postcssSafeParser;
 	} else {
 		options.syntax = postcssScss;
 	}
 
 	try {
-		const result = await postcss(autoprefixer(atom.config.get('autoprefixer'))).process(text, options);
-
-		result.warnings().forEach(x => {
-			console.warn(x.toString());
-			atom.notifications.addWarning('Autoprefixer', {
-				detail: x.toString()
+		let outCss;
+		// htmlPostCss requires complete html to process, selectedText doesn't work
+		if (isHTML && !selectedText) {
+			const processor = new htmlPostCss(autoprefixer(atom.config.get('autoprefixer')));
+			outCss = processor.process(text, {}, options);
+		} else {
+			const result = await postcss(autoprefixer(atom.config.get('autoprefixer'))).process(text, options);
+			result.warnings().forEach(x => {
+				console.warn(x.toString());
+				atom.notifications.addWarning('Autoprefixer', {
+					detail: x.toString()
+				});
 			});
-		});
+			outCss = result.css
+		}
 
 		const cursorPosition = editor.getCursorBufferPosition();
 		const line = atom.views.getView(editor).getFirstVisibleScreenRow() +
 			editor.getVerticalScrollMargin();
 
 		if (selectedText) {
-			editor.setTextInBufferRange(editor.getSelectedBufferRange(), result.css);
+			editor.setTextInBufferRange(editor.getSelectedBufferRange(), outCss);
 		} else {
-			editor.getBuffer().setTextViaDiff(result.css);
+			editor.getBuffer().setTextViaDiff(outCss);
 		}
 
 		editor.setCursorBufferPosition(cursorPosition);
