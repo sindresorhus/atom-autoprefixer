@@ -4,13 +4,14 @@ import postcss from 'postcss';
 import autoprefixer from 'autoprefixer';
 import postcssSafeParser from 'postcss-safe-parser';
 import postcssScss from 'postcss-scss';
+import unprefix from 'postcss-unprefix';
 
 const SUPPORTED_SCOPES = new Set([
 	'source.css',
 	'source.css.scss'
 ]);
 
-async function init(editor, onSave) {
+async function init(editor, onSave, type) {
 	const selectedText = onSave ? null : editor.getSelectedText();
 	const text = selectedText || editor.getText();
 
@@ -23,7 +24,12 @@ async function init(editor, onSave) {
 	}
 
 	try {
-		const result = await postcss(autoprefixer(atom.config.get('autoprefixer'))).process(text, options);
+		let result;
+		if (type === 'prefix') {
+			result = await postcss(autoprefixer(atom.config.get('autoprefixer'))).process(text, options);
+		} else {
+			result = await postcss([unprefix()]).process(text, options);
+		}
 
 		result.warnings().forEach(x => {
 			console.warn(x.toString());
@@ -96,16 +102,24 @@ export function activate() {
 			const isCSS = SUPPORTED_SCOPES.has(editor.getGrammar().scopeName);
 
 			if (isCSS && atom.config.get('autoprefixer.runOnSave')) {
-				await init(editor, true);
+				await init(editor, true, 'prefix');
 			}
 		});
 	}));
 
-	this.subscriptions.add(atom.commands.add('atom-workspace', 'autoprefixer', () => {
+	this.subscriptions.add(atom.commands.add('atom-workspace', 'autoprefixer:prefix', () => {
 		const editor = atom.workspace.getActiveTextEditor();
 
 		if (editor) {
-			init(editor);
+			init(editor, false, 'prefix');
+		}
+	}));
+
+	this.subscriptions.add(atom.commands.add('atom-workspace', 'autoprefixer:remove-prefixes', () => {
+		const editor = atom.workspace.getActiveTextEditor();
+
+		if (editor) {
+			init(editor, false, 'removePrefixes');
 		}
 	}));
 }
