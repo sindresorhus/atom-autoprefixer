@@ -30,7 +30,7 @@ async function init(editor, onSave) {
 
 	try {
 		let outCss;
-		// Package htmlPostCss requires complete html to process, selectedText doesn't work
+		// The `html-postcss` package requires complete HTML to work, so `selectedText` doesn't work
 		if (isHTML && !selectedText) {
 			const processor = new HTMLPostCSS(autoprefixer(atom.config.get('autoprefixer')));
 			outCss = processor.process(text, {}, options);
