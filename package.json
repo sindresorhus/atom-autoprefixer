@@ -27,7 +27,8 @@
 		"html-postcss": "^0.1.2",
 		"postcss": "^7.0.16",
 		"postcss-safe-parser": "^4.0.1",
-		"postcss-scss": "^2.0.0"
+		"postcss-scss": "^2.0.0",
+		"postcss-unprefix": "^2.1.4"
 	},
 	"devDependencies": {
 		"xo": "^0.24.0"
@@ -35,7 +36,8 @@
 	"activationCommands": {
 		"atom-workspace": [
 			"core:save",
-			"autoprefixer"
+			"autoprefixer:prefix",
+			"autoprefixer:remove-prefixes"
 		]
 	},
 	"xo": {

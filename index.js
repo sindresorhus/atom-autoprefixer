@@ -5,6 +5,7 @@ import autoprefixer from 'autoprefixer';
 import postcssSafeParser from 'postcss-safe-parser';
 import postcssScss from 'postcss-scss';
 import HtmlPostCss from 'html-postcss';
+import unprefix from 'postcss-unprefix';
 
 const SUPPORTED_SCOPES = new Set([
 	'source.css',
@@ -13,7 +14,7 @@ const SUPPORTED_SCOPES = new Set([
 
 const HTML_SCOPE = 'text.html.basic';
 
-async function init(editor, onSave) {
+async function init(editor, onSave, type) {
 	const {scopeName} = editor.getGrammar();
 	const isHTML = scopeName === HTML_SCOPE;
 
@@ -30,12 +31,22 @@ async function init(editor, onSave) {
 
 	try {
 		let outCss;
-		// The `html-postcss` package requires complete HTML to work, so `selectedText` doesn't work
-		if (isHTML && !selectedText) {
-			const processor = new HtmlPostCss(autoprefixer(atom.config.get('autoprefixer')));
-			outCss = processor.process(text, {}, options);
+		if (type === 'prefix') {
+			if (isHTML && !selectedText) {
+				const processor = new HtmlPostCss(autoprefixer(atom.config.get('autoprefixer')));
+				outCss = processor.process(text, {}, options);
+			} else {
+				const result = await postcss(autoprefixer(atom.config.get('autoprefixer'))).process(text, options);
+				result.warnings().forEach(x => {
+					console.warn(x.toString());
+					atom.notifications.addWarning('Autoprefixer', {
+						detail: x.toString()
+					});
+				});
+				outCss = result.css;
+			}
 		} else {
-			const result = await postcss(autoprefixer(atom.config.get('autoprefixer'))).process(text, options);
+			const result = await postcss([unprefix()]).process(text, options);
 			result.warnings().forEach(x => {
 				console.warn(x.toString());
 				atom.notifications.addWarning('Autoprefixer', {
@@ -109,16 +120,24 @@ export function activate() {
 			const isCSS = SUPPORTED_SCOPES.has(editor.getGrammar().scopeName);
 
 			if (isCSS && atom.config.get('autoprefixer.runOnSave')) {
-				await init(editor, true);
+				await init(editor, true, 'prefix');
 			}
 		});
 	}));
 
-	this.subscriptions.add(atom.commands.add('atom-workspace', 'autoprefixer', () => {
+	this.subscriptions.add(atom.commands.add('atom-workspace', 'autoprefixer:prefix', () => {
 		const editor = atom.workspace.getActiveTextEditor();
 
 		if (editor) {
-			init(editor);
+			init(editor, false, 'prefix');
+		}
+	}));
+
+	this.subscriptions.add(atom.commands.add('atom-workspace', 'autoprefixer:remove-prefixes', () => {
+		const editor = atom.workspace.getActiveTextEditor();
+
+		if (editor) {
+			init(editor, false, 'removePrefixes');
 		}
 	}));
 }

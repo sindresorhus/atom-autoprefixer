@@ -14,17 +14,29 @@ Or, Settings → Install → Search for `autoprefixer`
 
 ## Usage
 
-- Open the Command Palette and type `autoprefixer`.
+### Prefix
 
-	![](https://f.cloud.github.com/assets/1223565/2284892/51b999b2-9fce-11e3-9e9d-5e6a9cb4e933.gif)
+- Open the Command Palette and type `Autoprefixer: Prefix`.
 
-- In an HTML file, open the Command Palette, and type `autoprefixer`.
+	![](https://user-images.githubusercontent.com/6153816/57973335-23f09b80-79c5-11e9-91cc-66ae1ce9f99d.gif)
 
-	![](https://user-images.githubusercontent.com/6153816/58272510-55de7500-7dac-11e9-9f78-9ab20aa677c4.gif)
+	- In an HTML file, open the Command Palette, and type `Autoprefixer: Prefix`.
 
-- In an HTML file, select the CSS, open the Command Palette, and type `autoprefixer`.
+		![](https://user-images.githubusercontent.com/6153816/58272510-55de7500-7dac-11e9-9f78-9ab20aa677c4.gif)
 
-	![](https://user-images.githubusercontent.com/6153816/58272511-55de7500-7dac-11e9-9e97-a99393568594.gif)
+	- In an HTML file, select the CSS, open the Command Palette, and type `Autoprefixer: Prefix`.
+
+		![](https://user-images.githubusercontent.com/6153816/58272511-55de7500-7dac-11e9-9e97-a99393568594.gif)
+
+### Remove Prefixes
+
+- Open the Command Palette and type `Autoprefixer: Remove Prefixes`.
+
+	![](https://user-images.githubusercontent.com/6153816/57973337-23f09b80-79c5-11e9-8e68-5f48f2ea2dd1.gif)
+
+- In an HTML file, select the CSS, open the Command Palette, and type `Autoprefixer: Remove Prefixes`.
+
+	![](https://user-images.githubusercontent.com/6153816/57973338-24893200-79c5-11e9-869a-25b7e28387f4.gif)
 
 
 ## Settings
@@ -38,7 +50,8 @@ Set the keyboard shortcut you want in your [keymap](http://flight-manual.atom.io
 
 ```cson
 'atom-text-editor':
-	'cmd-shift-x': 'autoprefixer'
+	'cmd-shift-x': 'autoprefixer:prefix'
+	'cmd-shift-u': 'autoprefixer:remove-prefixes'
 ```
 
 
