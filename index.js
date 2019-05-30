@@ -4,7 +4,7 @@ import postcss from 'postcss';
 import autoprefixer from 'autoprefixer';
 import postcssSafeParser from 'postcss-safe-parser';
 import postcssScss from 'postcss-scss';
-import HTMLPostCSS from 'html-postcss';
+import HtmlPostCss from 'html-postcss';
 
 const SUPPORTED_SCOPES = new Set([
 	'source.css',
