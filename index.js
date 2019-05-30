@@ -45,6 +45,9 @@ async function init(editor, onSave, type) {
 				});
 				outCss = result.css;
 			}
+		} else if (isHTML && !selectedText) {
+			const processor = new HtmlPostCss(unprefix());
+			outCss = processor.process(text, {}, options);
 		} else {
 			const result = await postcss([unprefix()]).process(text, options);
 			result.warnings().forEach(x => {
