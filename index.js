@@ -38,17 +38,10 @@ async function init(editor, onSave, type) {
 			});
 		});
 
-		const line = atom.views.getView(editor).getFirstVisibleScreenRow() +
-			editor.getVerticalScrollMargin();
-
 		if (selectedText) {
 			editor.setTextInBufferRange(editor.getSelectedBufferRange(), result.css);
 		} else {
 			editor.getBuffer().setTextViaDiff(result.css);
-		}
-
-		if (editor.getScreenLineCount() > line) {
-			editor.scrollToScreenPosition([line, 0]);
 		}
 	} catch (error) {
 		if (error.name === 'CssSyntaxError') {
