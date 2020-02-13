@@ -38,7 +38,6 @@ async function init(editor, onSave, type) {
 			});
 		});
 
-		const cursorPosition = editor.getCursorBufferPosition();
 		const line = atom.views.getView(editor).getFirstVisibleScreenRow() +
 			editor.getVerticalScrollMargin();
 
@@ -47,8 +46,6 @@ async function init(editor, onSave, type) {
 		} else {
 			editor.getBuffer().setTextViaDiff(result.css);
 		}
-
-		editor.setCursorBufferPosition(cursorPosition);
 
 		if (editor.getScreenLineCount() > line) {
 			editor.scrollToScreenPosition([line, 0]);
