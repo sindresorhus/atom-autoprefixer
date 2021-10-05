@@ -1,6 +1,6 @@
 {
 	"name": "autoprefixer",
-	"version": "4.2.0",
+	"version": "4.3.0",
 	"description": "Prefix CSS and SCSS",
 	"license": "MIT",
 	"repository": "sindresorhus/atom-autoprefixer",
