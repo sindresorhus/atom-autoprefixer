@@ -23,10 +23,10 @@
 		"prefixer"
 	],
 	"dependencies": {
-		"autoprefixer": "^9.5.1",
-		"postcss": "^7.0.16",
-		"postcss-safe-parser": "^4.0.1",
-		"postcss-scss": "^2.0.0",
+		"autoprefixer": "^10.3.7",
+		"postcss": "^8.3.9",
+		"postcss-safe-parser": "^6.0.0",
+		"postcss-scss": "^4.0.1",
 		"postcss-unprefix": "^2.1.4"
 	},
 	"devDependencies": {
